@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-cache
+spec:
+  selector:
+    matchLabels:
+      app: redis-cache
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis-cache
+    spec:
+      containers:
+      - name: redis-cache
+        imagePullPolicy: Always
+        image: mihai97ionita/web-crawler:redis_crawler_cache
+        ports:
+        - containerPort: 6379
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "1024m"
+          limits:
+            memory: "2Gi"
+            cpu: "1500m"

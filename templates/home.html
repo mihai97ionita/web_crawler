@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Web crawler</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="icon" type="image/ico" href="/static/favicon.ico"/>
+
+  <style>
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+}
+
+/* Create two equal columns that sits next to each other */
+.column_1 {
+  flex: 50%;
+  padding: 10px;
+}
+
+.column_2 {
+  flex: 50%;
+  padding: 10px;
+  display: none;
+}
+
+.button {
+  background-color: blue;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: none;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+.bbutton {
+  background-color: blue;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+.button2:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+</style>
+
+</head>
+<body>
+
+  <script>
+    function s()
+    {
+      document.form2.submit();
+    }
+
+
+    function submitMe()
+    {
+      console.log("submit");
+      var s = document.createElement('submit');
+      s.innerHTML = "<input type='hidden' name='bbsubmit' value='submit'>";
+      document.form1.appendChild(s);
+      document.form1.submit();
+    }
+
+    function chk_onchange()
+    {
+      document.getElementById('form_part1').style.display="none";
+      document.getElementById('form_part2').style.display="block";
+      document.getElementById('button_next').style.display="none";
+      document.getElementById('button_run').style.display="block";
+    }
+
+</script>
+
+  <img src="/static/logo.png" >
+
+  <div class="w3-row-padding">
+    {% if alert_text != None %}
+      <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        {{ alert_text }}
+      </div>
+    {% endif %}
+    <div class="row">
+        <form id="form1" name="form1" method="post">
+          <div id="form_part1" class="column_1">
+            URL: <input type="text" name="url" size="50">
+          </div>
+          <div id="form_part2" class="column_2">
+            <h2>Information</h2>
+            {% for i in info %}
+              <input type=checkbox id="info_{{i}}" name="info_{{i}}" value="{{i}}">
+              <label for="info_{{i}}">{{ i }}</label><br>
+            {% endfor %}
+          </div>
+        </form>
+    </div>
+
+    <button id="button_next" class="bbutton button2" onclick="chk_onchange();">Next</button>
+    <button id="button_run" class="button button2" onclick="submitMe();">Run</button>
+
+
+  </div>
+
+</body>
+</html>

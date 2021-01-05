@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Web crawler</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="icon" type="image/ico" href="http://localhost::1007/favicon-192.ico"/>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      .row {
+        display: flex;
+      }
+
+      /* Create two equal columns that sits next to each other */
+      .column {
+        flex: 50%;
+        padding: 10px;
+        height: 300px; /* Should be removed. Only for demonstration */
+      }
+
+      .button {
+        background-color: #0000000;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+      }
+      hr.new {
+        border-top: 3px solid white;
+      }
+    </style>
+
+  </head>
+  <body>
+    <img src="/static/logo.png" >
+    <ol>
+      {% for i in info %}
+        <li><h3>{{ i }}</h3></li>
+        {% set info_list = info[i] %}
+        {% if info_list is string %}
+          <ul>
+              <li>{{ info_list }}</li>
+          </ul>
+        {% elif info_list is mapping %}
+          <ul>
+            {% for it in info_list %}
+              <li>{{ it }}</li>
+              <ul>
+                <li>{{ info_list[it] }}</li>
+              </ul>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <ul>
+            {% for l in info_list %}
+              <li>{{ l }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endfor %}
+    </ol>
+
+  </body>
+</html>

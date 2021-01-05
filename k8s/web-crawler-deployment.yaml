@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-crawler
+spec:
+  selector:
+    matchLabels:
+      app: web-crawler
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: web-crawler
+    spec:
+      ## memory allocated for chrome driver
+      volumes:
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: "2048Mi"
+      containers:
+      - name: web-crawler
+        imagePullPolicy: Always
+        image: mihai97ionita/web-crawler:web_crawler_image
+        ## memory allocated for chrome driver
+        volumeMounts:
+          - mountPath: /dev/shm
+            name: dshm
+        ports:
+        - containerPort: 1007
+        resources:
+          requests:
+            memory: "1024Mi"
+            cpu: "250m"
+          limits:
+            memory: "2048Mi"
+            cpu: "500m"
+        env:
+        - name: REDIS_CACHE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: web-crawler-config
+              key: redis-cache-host
+        - name: REDIS_CACHE_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: web-crawler-config
+              key: redis-cache-port
+        - name: REDIS_CACHE_PASS
+          valueFrom:
+            configMapKeyRef:
+              name: web-crawler-config
+              key: redis-cache-pass
